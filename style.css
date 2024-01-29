@@ -1,0 +1,96 @@
+       /* Tu CSS aquí */
+    img {
+        rotate:  270deg;
+        top: 50%;
+        left: 50%;
+        width: 150px; /* Ajusta el ancho según sea necesario */
+        color: #000000;
+
+        }
+    
+    * {
+    box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #575757;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column; /* Agregado para centrar verticalmente */
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    h1 {
+        color: #000000;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    #wheelContainer {
+        width: 600px;
+        height: 600px;
+        background-color: #000000;
+        border-radius: 50%;
+        border: 15px solid rgb(0, 0, 0);
+        position: relative;
+        overflow: hidden;
+        transition: 5s;
+        transform-origin: center center;
+    }
+    
+
+    #wheelContainer .item {
+        height: 50%; /* Ajusta la altura según sea necesario */
+        width: 120px; /* Mantén el ancho como lo tenías */
+        position: absolute;
+        clip-path: polygon(100% 0, 50% 100%, 0 0);
+        transform: translateX(-50%) rotate(0deg);
+        transform-origin: bottom;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px; /* Ajusta el tamaño de la letra según sea necesario */
+        font-weight: bold;
+        font-family: sans-serif;
+        color: #000000;
+        left: 50%;
+    }
+
+    #spin {
+        position: absolute;
+        bottom: 350px;
+        left: 20%;
+        transform: translateX(-50%);
+        z-index: 10;
+        background-color: #444343;
+        text-transform: uppercase;
+        border: 8px solid #000;
+        font-weight: bold;
+        font-size: 20px;
+        color: #000;
+        width: 80px;
+        height: 80px;
+        font-family: sans-serif;
+        border-radius: 50%;
+        cursor: pointer;
+        outline: none;
+        letter-spacing: 1px;
+    }
+
+    #wheelContainer .arrow-indicator {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 20px solid #ffeb3b; /* Color de la flecha, puedes ajustar según tus preferencias */
+        z-index: 1;
+    }

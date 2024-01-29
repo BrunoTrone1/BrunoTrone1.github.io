@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Ruleta</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <style>
+ 
+    </style>
+</head>
+
+<body>
+    <h1>La Ruleta</h1>
+    <button id="spin">Spin</button>
+    <img id="flecha" src="arrow.png"></img>
+    <div class="container" id="wheelContainer">
+    </div>
+
+    <script>
+        let container = document.getElementById("wheelContainer");
+        let btn = document.getElementById("spin");
+        let arrow = document.querySelector(".arrow");
+        let names = ["2", "3", "5", "7", "11", "13", "17", "23", "29", "31", "37", "41", "43", "47", "51" ]; // Agrega tus nombres aquí
+        let clicks = 0;
+
+        function createWheelItems() {
+            container.innerHTML = ""; // Limpiar el contenido actual
+
+            // Calcular el tamaño de letra máximo basado en la cantidad de elementos
+            let maxFontSize = 25 - names.length * 2;
+
+
+            // Crear elementos div para cada nombre con colores aleatorios
+            names.forEach((name, index) => {
+                let div = document.createElement("div");
+                div.textContent = name;
+                div.className = `item item${index + 1}`;
+                container.appendChild(div);
+
+                // Calcular el ángulo para distribuir equitativamente los elementos
+                let angle = (360 / names.length) * index;
+                div.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+                div.style.fontSize = `${maxFontSize}px`; // Ajustar tamaño de letra
+
+                // Asignar colores aleatorios a los nombres
+                let randomColor = getRandomColor();
+                div.style.backgroundColor = randomColor;
+                div.style.borderColor = randomColor;
+                
+            });
+        }
+
+        // Llamar a la función inicialmente para crear los elementos iniciales
+        createWheelItems();
+
+        btn.onclick = function () {
+            if (clicks === 0) {
+                // Restablecer la rotación antes de girar nuevamente
+                container.style.transition = "none";
+                container.style.transform = "scale(1) rotate(0deg)";
+
+                // Agregar un pequeño retraso antes de aplicar la nueva rotación para que funcione la transición
+                setTimeout(() => {
+                    container.style.transition = "5s";
+                    let randomRotation = Math.ceil(Math.random() * 1000);
+                    container.style.transform = `rotate(${randomRotation}deg)`;
+                }, 10);
+            }
+
+            clicks += 1;
+
+            // Reiniciar clicks después de cada giro
+            if (clicks === 2) {
+                clicks = 0;
+            }
+        };
+
+        // Función para agregar un nuevo integrante a la ruleta
+        function addMember() {
+            let newName = prompt("Ingrese el nombre del nuevo integrante:");
+            if (newName) {
+                names.push(newName);
+                createWheelItems();
+            }
+        }
+
+        // Llamar a la función para agregar un nuevo integrante cuando sea necesario
+        document.getElementById("spin").addEventListener("dblclick", addMember);
+
+        // Función para eliminar un integrante de la ruleta
+        function removeMember() {
+            let indexToRemove = prompt("Ingrese el número del integrante a eliminar (1-" + names.length + "):");
+            if (indexToRemove && !isNaN(indexToRemove) && indexToRemove >= 1 && indexToRemove <= names.length) {
+                names.splice(indexToRemove - 1, 1);
+                createWheelItems();
+            } else {
+                alert("Número inválido. Ingrese un número entre 1 y " + names.length + ".");
+            }
+        }
+
+        // Llamar a la función para eliminar un integrante cuando sea necesario
+        document.getElementById("spin").addEventListener("contextmenu", function (event) {
+            event.preventDefault(); // Evitar menú contextual
+            removeMember();
+        });
+
+        // Función para generar colores aleatorios
+        function getRandomColor() {
+            let letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
